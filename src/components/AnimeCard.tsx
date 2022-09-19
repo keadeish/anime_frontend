@@ -1,42 +1,58 @@
 import React, { useEffect, useState } from "react";
-import { animeStructure } from "../utils/animeStructure";
+import { animeObject, animeStructure, randomAnimeStructure } from "../utils/animeStructure";
 export function AnimeCard(): JSX.Element {
-  const [firstAnimeURL, setFirstAnimeURL] = useState("");
-  const [secondAnimeURL, setSecondAnimeURL] = useState("");
-  const [thirdAnimeURL, setThirdAnimeURL] = useState("");
+  const [animeURLList, setAnimeURLList] = useState<string[]>();
+  // const [correspondingAnimeName, setCorrespondingAnimeName] = useState<string[]>()
+  const [randomAnimeURL, setRandomAnimeURL] = useState<any>()
+  
+
+  async function randomAnime() {
+    const response = await fetch("https://api.jikan.moe/v4/random/anime")
+    // const generateAnime : animeStructure = response.json
+    const randomAnimeJSON: randomAnimeStructure = await response.json()
+    const generatedAnimeURL: randomAnimeStructure | string = randomAnimeJSON.data.url
+    console.log(response, "generated anime")
+    setRandomAnimeURL(generatedAnimeURL)
+  }
 
   async function animeData() {
     const response = await fetch("https://api.jikan.moe/v4/top/anime").then();
     const animeBody: animeStructure = await response.json();
-    const firstAnime = animeBody.data[0].images.jpg.image_url;
-    const secondAnime = animeBody.data[0 + 1].images.jpg.image_url;
-    const thirdAnime = animeBody.data[0 + 2].images.jpg.image_url;
-    console.log(animeBody);
-    console.log(firstAnime);
-    console.log(secondAnime);
-    console.log(thirdAnime);
-    console.log(
-      animeBody.data[0 + 1].images.jpg.image_url,
-      "here is the image .jpg url"
-    ); //gets #2 URL
-    console.log(
-      animeBody.data[0].images.jpg.image_url,
-      "here is the second url"
-    ); //gets #1 URL
-    setFirstAnimeURL(firstAnime);
-    setSecondAnimeURL(secondAnime);
-    setThirdAnimeURL(thirdAnime);
+    const animeLinks = animeBody.data.map((link): any => {
+      return [link.images.jpg.image_url];
+    });
+    // const animeTitle = animeBody.data.map((name): any => {
+    //   return [name.title_english];
+    // });
+    // setCorrespondingAnimeName(animeTitle)
+    setAnimeURLList(animeLinks);
+    // console.log(animeLinks[20], "here is the 20th anime");
+    // console.log(animeLinks);
   }
 
   useEffect(() => {
     animeData();
+    randomAnime()
   }, []);
 
   // console.log(animeData)
 
   return (
     <>
-      <div>
+      {animeURLList?.map((URL, mal_id) => {
+        return (
+        
+          <div key={mal_id}>
+            {mal_id > 23 && <><img key={mal_id} src={URL}></img> <p>anime</p></>}
+            
+          </div>
+        );
+      })}
+      <form action={randomAnimeURL}>
+    <input type="submit" value="Generate Random Anime!" />
+</form>
+
+      {/* <div>
         <img src={firstAnimeURL} alt="first anime"></img> <p>First Anime</p>
       </div>
       <div>
@@ -44,7 +60,7 @@ export function AnimeCard(): JSX.Element {
       </div>
       <div>
         <img src={thirdAnimeURL} alt="third anime"></img> <p>Third Anime</p>
-      </div>
+      </div> */}
     </>
   );
 }
