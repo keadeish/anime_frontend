@@ -4,7 +4,20 @@ export function AnimeCard(): JSX.Element {
   const [animeURLList, setAnimeURLList] = useState<string[]>();
   // const [correspondingAnimeName, setCorrespondingAnimeName] = useState<string[]>()
   const [randomAnimeURL, setRandomAnimeURL] = useState<any>()
+  const firstSeriesID = ""
+  const secondSeriesID = ""
+  const thirdSeriesID = ""
   
+  async function animeData() {
+    const firstResponse = await fetch(`https://api.jikan.moe/v4/anime/${firstSeriesID}`)
+    const secondResponse = await fetch(`https://api.jikan.moe/v4/anime/${secondSeriesID}`)
+    const thirdResponse = await fetch(`https://api.jikan.moe/v4/anime/${thirdSeriesID}`)
+    
+    const animeBody: animeStructure | string = await firstResponse.json();
+    console.log(animeBody)
+    const animeLinks = animeBody.data.map((link): any => {
+      return [link.images.jpg.image_url];
+    })}
 
   async function randomAnime() {
     const response = await fetch("https://api.jikan.moe/v4/random/anime")
@@ -15,20 +28,20 @@ export function AnimeCard(): JSX.Element {
     setRandomAnimeURL(generatedAnimeURL)
   }
 
-  async function animeData() {
-    const response = await fetch("https://api.jikan.moe/v4/top/anime").then();
-    const animeBody: animeStructure = await response.json();
-    const animeLinks = animeBody.data.map((link): any => {
-      return [link.images.jpg.image_url];
-    });
-    // const animeTitle = animeBody.data.map((name): any => {
-    //   return [name.title_english];
-    // });
-    // setCorrespondingAnimeName(animeTitle)
-    setAnimeURLList(animeLinks);
-    // console.log(animeLinks[20], "here is the 20th anime");
-    // console.log(animeLinks);
-  }
+  // async function animeData() {
+  //   const response = await fetch("https://api.jikan.moe/v4/top/anime").then();
+  //   const animeBody: animeStructure = await response.json();
+  //   const animeLinks = animeBody.data.map((link): any => {
+  //     return [link.images.jpg.image_url];
+  //   });
+  //   // const animeTitle = animeBody.data.map((name): any => {
+  //   //   return [name.title_english];
+  //   // });
+  //   // setCorrespondingAnimeName(animeTitle)
+  //   setAnimeURLList(animeLinks);
+  //   // console.log(animeLinks[20], "here is the 20th anime");
+  //   // console.log(animeLinks);
+  // }
 
   useEffect(() => {
     animeData();
