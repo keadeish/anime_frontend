@@ -1,23 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { animeObject, animeStructure, randomAnimeStructure } from "../utils/animeStructure";
+import { subSelectedInterface } from "../utils/selectedInterface";
 export function AnimeCard(): JSX.Element {
   const [animeURLList, setAnimeURLList] = useState<string[]>();
   // const [correspondingAnimeName, setCorrespondingAnimeName] = useState<string[]>()
   const [randomAnimeURL, setRandomAnimeURL] = useState<any>()
-  const firstSeriesID = ""
-  const secondSeriesID = ""
-  const thirdSeriesID = ""
+  const firstSeriesID = 1
+  const secondSeriesID = 40154
+  const thirdSeriesID = 43608
   
   async function animeData() {
     const firstResponse = await fetch(`https://api.jikan.moe/v4/anime/${firstSeriesID}`)
     const secondResponse = await fetch(`https://api.jikan.moe/v4/anime/${secondSeriesID}`)
     const thirdResponse = await fetch(`https://api.jikan.moe/v4/anime/${thirdSeriesID}`)
     
-    const animeBody: animeStructure | string = await firstResponse.json();
-    console.log(animeBody)
-    const animeLinks = animeBody.data.map((link): any => {
-      return [link.images.jpg.image_url];
-    })}
+    const firstAnime: any = await firstResponse.json(); //how do i change this from any?
+    const secondAnime: any = await secondResponse.json(); //how do i change this from any?
+    const thirdAnime: any = await thirdResponse.json(); //how do i change this from any?
+    console.log(firstAnime, secondAnime, thirdAnime)
+    const arrayOfAnime = [firstAnime, secondAnime, thirdAnime]
+    console.log(arrayOfAnime)
+    console.log(arrayOfAnime[0].data.url, "first anime")
+    const animeLinks = arrayOfAnime.map((link): any => {
+     return [link.data.url, link.data.images.jpg.image_url]
+
+    }
+    ) //gives the image URL and the URL of the MAL page
+    console.log(animeLinks, "here are the links")
+    setAnimeURLList(animeLinks)
+    
+    // const animeLinks = animeBody.data.url((link : subSelectedInterface): any => {
+    //   return (animeLinks);
+    // })
+  }
 
   async function randomAnime() {
     const response = await fetch("https://api.jikan.moe/v4/random/anime")
@@ -34,10 +49,10 @@ export function AnimeCard(): JSX.Element {
   //   const animeLinks = animeBody.data.map((link): any => {
   //     return [link.images.jpg.image_url];
   //   });
-  //   // const animeTitle = animeBody.data.map((name): any => {
-  //   //   return [name.title_english];
-  //   // });
-  //   // setCorrespondingAnimeName(animeTitle)
+  //   const animeTitle = animeBody.data.map((name): any => {
+  //     return [name.title_english];
+  //   });
+  //   setCorrespondingAnimeName(animeTitle)
   //   setAnimeURLList(animeLinks);
   //   // console.log(animeLinks[20], "here is the 20th anime");
   //   // console.log(animeLinks);
@@ -52,11 +67,12 @@ export function AnimeCard(): JSX.Element {
 
   return (
     <>
+    <p>{animeURLList}</p>
       {animeURLList?.map((URL, mal_id) => {
         return (
         
           <div key={mal_id}>
-            {mal_id > 23 && <><img key={mal_id} src={URL}></img> <p>anime</p></>}
+            {mal_id > 21 && <><img key={mal_id} src={URL}></img> <p>anime</p></>}
             
           </div>
         );
