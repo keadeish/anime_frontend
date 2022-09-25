@@ -1,50 +1,74 @@
 import React, { useEffect, useState } from "react";
-import { animeStructure } from "../utils/animeStructure";
+import { animeStructure, randomAnimeStructure } from "../utils/animeStructure";
 export function AnimeCard(): JSX.Element {
-  const [firstAnimeURL, setFirstAnimeURL] = useState("");
-  const [secondAnimeURL, setSecondAnimeURL] = useState("");
-  const [thirdAnimeURL, setThirdAnimeURL] = useState("");
+  const [animeURLList, setAnimeURLList] = useState<string[]>();
+  // const [correspondingAnimeName, setCorrespondingAnimeName] = useState<string[]>()
+  const [randomAnimeURL, setRandomAnimeURL] = useState<any>();
+  const firstSeriesID = 1;
+  const secondSeriesID = 20;
+  const thirdSeriesID = 48453;
 
   async function animeData() {
-    const response = await fetch("https://api.jikan.moe/v4/top/anime").then();
-    const animeBody: animeStructure = await response.json();
-    const firstAnime = animeBody.data[0].images.jpg.image_url;
-    const secondAnime = animeBody.data[0 + 1].images.jpg.image_url;
-    const thirdAnime = animeBody.data[0 + 2].images.jpg.image_url;
-    console.log(animeBody);
-    console.log(firstAnime);
-    console.log(secondAnime);
-    console.log(thirdAnime);
-    console.log(
-      animeBody.data[0 + 1].images.jpg.image_url,
-      "here is the image .jpg url"
-    ); //gets #2 URL
-    console.log(
-      animeBody.data[0].images.jpg.image_url,
-      "here is the second url"
-    ); //gets #1 URL
-    setFirstAnimeURL(firstAnime);
-    setSecondAnimeURL(secondAnime);
-    setThirdAnimeURL(thirdAnime);
+    const firstResponse = await fetch(
+      `https://api.jikan.moe/v4/anime/${firstSeriesID}`
+    );
+    const secondResponse = await fetch(
+      `https://api.jikan.moe/v4/anime/${secondSeriesID}`
+    );
+    const thirdResponse = await fetch(
+      `https://api.jikan.moe/v4/anime/${thirdSeriesID}`
+    );
+
+    const firstAnime: animeStructure = await firstResponse.json(); //how do i change this from any?
+    const secondAnime: animeStructure = await secondResponse.json(); //how do i change this from any?
+    const thirdAnime: any = await thirdResponse.json(); //how do i change this from any?
+    console.log(firstAnime, secondAnime, thirdAnime);
+    const arrayOfAnime = [firstAnime, secondAnime, thirdAnime];
+    console.log(arrayOfAnime);
+    console.log(arrayOfAnime[0].url, "first anime");
+    const animeLinks = arrayOfAnime.map((link): any => {
+      return [
+        link.data.url,
+        link.data.images.jpg.image_url,
+        link.data.title_english,
+      ];
+    }); //gives the image URL and the URL of the MAL page
+    console.log(animeLinks, "here are the links");
+    setAnimeURLList(animeLinks);
+
+    // const animeLinks = animeBody.data.url((link : subSelectedInterface): any => {
+    //   return (animeLinks);
+    // })
   }
 
+  async function randomAnime() {
+    const response = await fetch("https://api.jikan.moe/v4/random/anime");
+    // const generateAnime : animeStructure = response.json
+    const randomAnimeJSON: randomAnimeStructure = await response.json();
+    const generatedAnimeURL: randomAnimeStructure | string =
+      randomAnimeJSON.data.url;
+    console.log(response, "generated anime");
+    setRandomAnimeURL(generatedAnimeURL);
+  }
   useEffect(() => {
     animeData();
+    randomAnime();
   }, []);
-
-  // console.log(animeData)
-
   return (
     <>
-      <div>
-        <img src={firstAnimeURL} alt="first anime"></img> <p>First Anime</p>
-      </div>
-      <div>
-        <img src={secondAnimeURL} alt="second anime"></img> <p>Second Anime</p>
-      </div>
-      <div>
-        <img src={thirdAnimeURL} alt="third anime"></img> <p>Third Anime</p>
-      </div>
+      {animeURLList?.map((URL) => {
+        return (
+          <div className="animeCard" key={URL[2]}>
+            <p className="animeName" key={URL[2]}>
+              {URL[2]}
+            </p>
+            <img className="animeImage" key={URL[1]} src={URL[1]} alt=""></img>
+          </div>
+        );
+      })}
+      <form action={randomAnimeURL}>
+        <input type="submit" value="Generate Random Anime!" />
+      </form>
     </>
   );
 }
