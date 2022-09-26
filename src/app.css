@@ -2,6 +2,10 @@ img {
   border-style: solid;
 }
 .animeCard {
+  margin-left: 40ch;
+  margin-right: 40ch;
+  /* margin-top: 1ch;
+    margin-bottom: 1ch; */
   border-style: solid;
 }
 .animeName {
@@ -9,4 +13,27 @@ img {
 }
 .animeImage {
   border-style: solid;
+  vertical-align: middle;
+}
+.animeSynopsis {
+  /* width: 100ch; */
+  /* white-space: nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis; */
+  display: inline-block;
+  border-style: ridge;
+}
+.pageHeader {
+  border-style: solid;
+}
+.headTitle {
+  text-align: center;
+}
+.body {
+  border-style: solid;
+  color: black;
+}
+.outerBody {
+  border-style: solid;
+  background-color: black;
 }

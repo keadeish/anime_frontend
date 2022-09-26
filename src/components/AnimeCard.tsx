@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { animeStructure, randomAnimeStructure } from "../utils/animeStructure";
+import menacingGIF from "../utils/assets/jojo-menacing.gif";
 export function AnimeCard(): JSX.Element {
   const [animeURLList, setAnimeURLList] = useState<string[]>();
   // const [correspondingAnimeName, setCorrespondingAnimeName] = useState<string[]>()
@@ -7,7 +8,6 @@ export function AnimeCard(): JSX.Element {
   const firstSeriesID = 1;
   const secondSeriesID = 20;
   const thirdSeriesID = 48453;
-
   async function animeData() {
     const firstResponse = await fetch(
       `https://api.jikan.moe/v4/anime/${firstSeriesID}`
@@ -31,19 +31,14 @@ export function AnimeCard(): JSX.Element {
         link.data.url,
         link.data.images.jpg.image_url,
         link.data.title_english,
+        link.data.synopsis,
       ];
     }); //gives the image URL and the URL of the MAL page
     console.log(animeLinks, "here are the links");
     setAnimeURLList(animeLinks);
-
-    // const animeLinks = animeBody.data.url((link : subSelectedInterface): any => {
-    //   return (animeLinks);
-    // })
   }
-
   async function randomAnime() {
     const response = await fetch("https://api.jikan.moe/v4/random/anime");
-    // const generateAnime : animeStructure = response.json
     const randomAnimeJSON: randomAnimeStructure = await response.json();
     const generatedAnimeURL: randomAnimeStructure | string =
       randomAnimeJSON.data.url;
@@ -56,19 +51,32 @@ export function AnimeCard(): JSX.Element {
   }, []);
   return (
     <>
-      {animeURLList?.map((URL) => {
-        return (
-          <div className="animeCard" key={URL[2]}>
-            <p className="animeName" key={URL[2]}>
-              {URL[2]}
-            </p>
-            <img className="animeImage" key={URL[1]} src={URL[1]} alt=""></img>
-          </div>
-        );
-      })}
-      <form action={randomAnimeURL}>
-        <input type="submit" value="Generate Random Anime!" />
-      </form>
+      <header className="pageHeader">
+        <h3 className="headTitle">Psychician</h3>
+      </header>
+      <body className="body">
+        {animeURLList?.map((URL) => {
+          return (
+            <div className="animeCard" key={URL[2]}>
+              <p className="animeName" key={URL[2]}>
+                {URL[2]}
+              </p>
+              <img
+                className="animeImage"
+                key={URL[1]}
+                src={URL[1]}
+                alt=""
+              ></img>
+              <p className="animeSynopsis">{URL[3]}</p>
+            </div>
+          );
+        })}
+        <form action={randomAnimeURL}>
+          <input type="submit" value="Generate Random Anime!" />
+        </form>
+        <img src={menacingGIF}></img>
+      </body>
     </>
   );
 }
+// onMouseOver={(() => {<img src={menacingGIF}></img>})}
