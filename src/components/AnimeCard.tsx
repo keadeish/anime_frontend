@@ -10,7 +10,6 @@ export function AnimeCard(): JSX.Element {
   // const firstSeriesID = 1;
   // const secondSeriesID = 20;
   // const thirdSeriesID = 48453;
-
   // async function animeData() {
   //   const firstResponse = await fetch(
   //     `https://api.jikan.moe/v4/anime/${firstSeriesID}`
@@ -58,7 +57,9 @@ export function AnimeCard(): JSX.Element {
   //   randomAnime();
   // }, []);
   return (
-    <> <FirstAnime /> <SecondAnime /> <ThirdAnime />
+    <>
+      {" "}
+      <FirstAnime /> <SecondAnime /> <ThirdAnime />
     </>
   );
 }
