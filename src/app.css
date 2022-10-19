@@ -1,12 +1,33 @@
 img {
   border-style: solid;
 }
+
 .animeCard {
   border-style: solid;
 }
+
 .animeName {
   border-style: solid;
+  background-color: white;
 }
+
 .animeImage {
   border-style: solid;
+}
+
+.boarder {
+  border-color: aqua;
+  border-style: solid;
+  background-color: white;
+}
+
+.form {
+  border-color: black;
+  border-style: solid;
+  background-color: white;
+  fill: white;
+}
+
+* {
+  background-color: bisque;
 }
