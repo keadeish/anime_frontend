@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FirstAnime } from "./FirstAnime";
 import { RandomAnime } from "./RandomAnime";
 import { SecondAnime } from "./SecondAnime";
