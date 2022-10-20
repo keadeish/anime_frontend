@@ -1,12 +1,58 @@
-img {
-  border-style: solid;
-}
 .animeCard {
   border-style: solid;
 }
+
 .animeName {
+  text-align: center;
+  width: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: white;
+  border-style: solid;
+  /* background-color: #2F52A2 */
+}
+
+.animeImage {
+  background-color: #2f52a2;
   border-style: solid;
 }
-.animeImage {
+
+.boarder {
+  width: fit-content;
+  border-color: white;
   border-style: solid;
+  background-color: white;
+}
+
+/* .page {
+  border-color: black;
+  background-color: black;
+  align-items: center;
+} */
+
+.form {
+  /* position: absolute; */
+  /* top: 50%; */
+  /* left: 50px; */
+  /* transform: translate(-50, 50); */
+  color: white;
+  width: fit-content;
+  /* border-color: black; */
+  border-style: solid;
+  background-color: #2f52a2;
+  fill: white;
+}
+
+.form:hover {
+  opacity: 0.5;
+  transition-duration: 0.5;
+}
+
+* {
+  background-color: #2f52a2;
+}
+
+.pageTitle {
+  color: white;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
