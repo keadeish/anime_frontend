@@ -17,14 +17,21 @@ export function ThirdAnime(): JSX.Element {
 
   return (
     <>
-      <h3 className="animeName"><a href={anime?.data.url}>{anime?.data.title_english} {anime?.data.year}</a></h3>
+      <h3 className="animeName">
+        <a href={anime?.data.url}>
+          {anime?.data.title_english} {anime?.data.year}
+        </a>
+      </h3>
       <p className="text">⭐⭐⭐⭐⭐</p>
       <img
         className="animeImage"
         src={anime?.data.images.jpg.image_url}
         alt=""
       ></img>
-      <span className="text">SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS</span>
+      <span className="text">
+        SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS
+        SYNOPSIS SYNOPSIS SYNOPSIS SYNOPSIS
+      </span>
     </>
   );
 }

@@ -1,3 +1,5 @@
-import { randomTest } from "./random"
+import { randomTest } from "./random";
 
-test('random', () => { expect(randomTest()).toBe("hi"); })
+test("random", () => {
+  expect(randomTest()).toBe("hi");
+});
