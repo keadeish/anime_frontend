@@ -6,7 +6,7 @@ import { ThirdAnime } from "./ThirdAnime";
 export function AnimeCard(): JSX.Element {
   return (
     <>
-      <div className="container">
+      <div>
         <div className="boarder">
           <FirstAnime />
           <SecondAnime />
